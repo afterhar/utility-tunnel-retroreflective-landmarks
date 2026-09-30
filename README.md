@@ -28,7 +28,7 @@ python3 -m pip install --user -r requirements.txt
 ## Build
 
 \`\`\`bash
-git clone https://github.com/YOUR_ACCOUNT/utility-tunnel-retroreflective-landmarks.git
+git clone https://github.com/afterhar/utility-tunnel-retroreflective-landmarks.git
 cd utility-tunnel-retroreflective-landmarks/ros1_ws
 catkin_make
 source /opt/ros/noetic/setup.bash
