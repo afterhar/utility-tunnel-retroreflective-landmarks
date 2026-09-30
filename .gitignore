@@ -1,0 +1,24 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+
+# ROS and build artifacts
+ros1_ws/build/
+ros1_ws/devel/
+ros1_ws/install/
+ros1_ws/log/
+
+# Large or controlled experimental data
+*.bag
+*.db3
+*.pcd
+*.ply
+data/
+outputs/
+
+# Editor and operating-system files
+*.log
+*.orig
+*.swp
+.DS_Store
+

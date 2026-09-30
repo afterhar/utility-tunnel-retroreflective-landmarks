@@ -1,0 +1,15 @@
+name: Python syntax
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check Python syntax
+        run: |
+          python3 -m compileall -q ros1_ws/src/reflector_detector/scripts evaluation/scripts
+

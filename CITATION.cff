@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the associated paper."
+title: "Stable Retroreflective-Landmark Observation for Utility-Tunnel Robots"
+type: software
+version: 1.0.0
+date-released: 2026-09-30
+authors:
+  - family-names: Wang
+    given-names: Jicong
+  - family-names: Li
+    given-names: Hongpeng
+  - family-names: Zhang
+    given-names: Jianhua
+  - family-names: Chen
+    given-names: Siyuan
+  - family-names: Xu
+    given-names: Lihui
+  - family-names: Xie
+    given-names: Min
+  - family-names: Long
+    given-names: Yue
+  - family-names: Shu
+    given-names: Jiangpeng
+

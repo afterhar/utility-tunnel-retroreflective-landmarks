@@ -1,0 +1,95 @@
+# Paper reference configuration for the proposed observation module.
+# The values are not universal sensor calibration values. Re-tune them after
+# changing the LiDAR, reflector material, sensor pose, or environment.
+
+# Front-end range, height, and intensity selection.
+intensity_threshold: 140.0
+z_min: -0.50
+z_max: 0.60
+min_detection_range: 0.80
+max_detection_range: 20.0
+cluster_voxel_size: 0.0
+
+# Dense candidate generation and vertical-column geometry.
+cluster_eps: 0.08
+min_cluster_size: 2
+enable_shape_filter: true
+max_cluster_x_span: 0.32
+max_cluster_y_span: 0.32
+max_cluster_xy_span: 0.26
+min_cluster_z_span: 0.12
+max_cluster_z_span: 0.90
+max_cluster_xy_std: 0.06
+min_cluster_aspect_ratio: 1.0
+max_cluster_aspect_ratio: 12.0
+min_cluster_mean_intensity: 110.0
+min_z_bands: 2
+z_band_step: 0.05
+
+# Candidate fusion and sparse-candidate recovery.
+candidate_fusion_xy_threshold: 0.12
+cluster_merge_xy: 0.15
+enable_sparse_column_mode: true
+sparse_column_xy_radius: 0.09
+sparse_column_min_range: 2.0
+sparse_column_min_points: 2
+sparse_column_min_z_range: 0.12
+sparse_column_max_xy_range: 0.18
+sparse_column_max_xy_std: 0.055
+sparse_column_min_z_bands: 2
+sparse_column_min_mean_intensity: 108.0
+
+# Near-range sparse recovery uses stronger vertical and contrast constraints.
+near_sparse_enable: true
+near_sparse_min_range: 1.20
+near_sparse_max_range: 2.50
+near_sparse_min_points: 2
+near_sparse_min_z_range: 0.14
+near_sparse_max_xy_range: 0.16
+near_sparse_max_xy_std: 0.035
+near_sparse_min_z_bands: 3
+near_sparse_min_mean_intensity: 108.0
+near_sparse_min_contrast_ratio: 1.10
+
+# Temporal association and state transition parameters.
+match_distance_threshold: 0.35
+max_missing_frames: 6
+dense_stable_grace_frames: 3
+dense_degrade_window: 5
+dense_degrade_max_hits: 1
+dense_degrade_min_confidence: 0.56
+dense_recover_window: 3
+dense_recover_min_hits: 2
+dense_recover_min_confidence: 0.64
+sparse_stable_window: 5
+sparse_stable_min_hits: 2
+sparse_stable_min_confidence: 0.54
+sparse_degrade_window: 7
+sparse_degrade_max_hits: 1
+sparse_degrade_min_confidence: 0.44
+sparse_recover_window: 4
+sparse_recover_min_hits: 2
+sparse_recover_min_confidence: 0.60
+sparse_stable_grace_frames: 4
+enable_output_hold: true
+output_hold_frames: 3
+output_hold_max_missing: 3
+adaptive_rotation_tracking: true
+rotation_rate_threshold: 0.35
+rotation_gate_expand: 1.35
+rotation_missing_bonus: 2
+rotation_rebind_relax: 0.25
+enable_imu_weak_prediction: true
+weak_prediction_velocity_gain: 0.60
+weak_prediction_gate_expand: 1.35
+global_assignment_max_candidates: 14
+
+# IMU deskew is disabled unless per-point timing and the sensor/IMU transform
+# have been calibrated for the deployment.
+enable_imu_deskew: false
+max_imu_deskew_shift: 0.50
+imu_deskew_scan_duration: 0.10
+imu_deskew_time_scale: 1.0
+debug_print_every_n: 10
+enable_timing_log: true
+

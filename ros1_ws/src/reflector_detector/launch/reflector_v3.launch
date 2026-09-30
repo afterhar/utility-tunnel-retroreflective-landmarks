@@ -1,0 +1,27 @@
+<launch>
+  <!-- Override these arguments to match the deployed robot topic names. -->
+  <arg name="config" default="$(find reflector_detector)/config/reflector_v3_utility_tunnel_paper.yaml"/>
+  <arg name="input_topic" default="/rslidar_points"/>
+  <arg name="imu_topic" default="/imu/data"/>
+  <arg name="odom_topic" default="/Odometry"/>
+  <arg name="frame_id" default="rslidar"/>
+  <arg name="use_sim_time" default="false"/>
+  <arg name="enable_visualization" default="true"/>
+  <arg name="publish_filtered_cloud" default="true"/>
+  <arg name="publish_processed_input_cloud" default="false"/>
+
+  <param name="/use_sim_time" value="$(arg use_sim_time)"/>
+
+  <node pkg="reflector_detector" type="reflector_detector_v3_node.py"
+        name="reflector_detector_v3" output="screen">
+    <rosparam command="load" file="$(arg config)"/>
+    <param name="input_topic" value="$(arg input_topic)"/>
+    <param name="imu_topic" value="$(arg imu_topic)"/>
+    <param name="odom_topic" value="$(arg odom_topic)"/>
+    <param name="frame_id" value="$(arg frame_id)"/>
+    <param name="enable_visualization" value="$(arg enable_visualization)"/>
+    <param name="publish_filtered_cloud" value="$(arg publish_filtered_cloud)"/>
+    <param name="publish_processed_input_cloud" value="$(arg publish_processed_input_cloud)"/>
+  </node>
+</launch>
+

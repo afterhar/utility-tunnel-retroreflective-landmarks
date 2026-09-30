@@ -1,0 +1,13 @@
+uint32 tracker_id
+geometry_msgs/Pose pose
+float32 confidence
+uint8 state
+uint8 gate_mode
+uint8 stable_count
+uint8 missing_count
+float32 gate_radius
+float32 score_intensity
+float32 score_shape
+float32 score_temporal
+float32 score_prediction
+float32 association_cost
