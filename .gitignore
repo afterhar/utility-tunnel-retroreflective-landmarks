@@ -7,6 +7,7 @@ ros1_ws/build/
 ros1_ws/devel/
 ros1_ws/install/
 ros1_ws/log/
+ros1_ws/.catkin_workspace
 
 # Large or controlled experimental data
 *.bag

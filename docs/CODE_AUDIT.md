@@ -8,12 +8,12 @@
 
 ## Documentation and Comments
 
-All four runtime Python modules have module-level descriptions. The front end documents its clustering dispatch and processing architecture; the sparse module documents its candidate representation and relaxed/near-range paths; the tracker documents its Kalman, assignment, confidence, and state-machine roles. Evaluation scripts expose command-line parameters through \`argparse\` and include concise module purposes. This is sufficient for source inspection without adding redundant line-by-line comments.
+All four runtime Python modules have module-level descriptions. The front end documents its clustering dispatch and processing architecture; the sparse module documents its candidate representation and relaxed/near-range paths; the tracker documents its Kalman, assignment, confidence, and state-machine roles. Evaluation scripts expose command-line parameters through `argparse` and include concise module purposes. This is sufficient for source inspection without adding redundant line-by-line comments.
 
 ## Excluded Deliberately
 
 - Legacy V1/V2 variants that were not part of the final paper implementation.
-- \`build\`, \`devel\`, logs, editor artifacts, and machine-specific paths.
+- `build`, `devel`, logs, editor artifacts, and machine-specific paths.
 - Raw rosbags, maps, manual site assets, and proprietary annotations.
 - Third-party Gazebo, Unitree, and robot-navigation source trees. Their licenses, dependencies, and operational configuration require independent distribution decisions.
 

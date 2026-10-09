@@ -39,10 +39,10 @@ catkin_install_python(PROGRAMS
   scripts/reflector_sparse_detector.py
   scripts/reflector_tracker.py
   scripts/imu_deskew.py
-  DESTINATION \${CATKIN_PACKAGE_BIN_DESTINATION}
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
 install(DIRECTORY config launch msg
-  DESTINATION \${CATKIN_PACKAGE_SHARE_DESTINATION}
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 

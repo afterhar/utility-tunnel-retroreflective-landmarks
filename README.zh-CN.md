@@ -12,64 +12,66 @@
 
 ## 目录结构
 
-\`\`\`text
+```text
 ros1_ws/src/reflector_detector/  ROS Noetic 功能包与消息定义
 evaluation/scripts/              CSV 导出、人工标注和评价工具
 docs/                            算法结构、数据边界、代码审查和复现实验说明
-\`\`\`
+```
 
 ## 运行环境
 
-开发环境为 Ubuntu 20.04、ROS Noetic 和 Python 3。运行时需要 ROS 包 \`rospy\`、\`sensor_msgs\`、\`nav_msgs\`、\`geometry_msgs\`、\`visualization_msgs\`、\`message_generation\`，以及 NumPy、SciPy、FilterPy。
+开发环境为 Ubuntu 20.04、ROS Noetic 和 Python 3。运行时需要 ROS 包 `rospy`、`sensor_msgs`、`nav_msgs`、`geometry_msgs`、`visualization_msgs`、`message_generation`，以及 NumPy、SciPy、FilterPy。
 
-\`\`\`bash
+```bash
 sudo apt-get install ros-noetic-desktop-full python3-numpy python3-scipy
 python3 -m pip install --user -r requirements.txt
-\`\`\`
+```
 
 ## 编译
 
-\`\`\`bash
+```bash
 git clone https://github.com/afterhar/utility-tunnel-retroreflective-landmarks.git
 cd utility-tunnel-retroreflective-landmarks/ros1_ws
-catkin_make
 source /opt/ros/noetic/setup.bash
+catkin_make -DPYTHON_EXECUTABLE=/usr/bin/python3
 source devel/setup.bash
-\`\`\`
+```
 
 ## 启动稳定观测模块
 
-随仓库提供的配置对应论文中的实验参数，其中共同强度阈值为 \`140\`。该配置是 Livox Mid-360 部署示例；更换雷达、反光材料、传感器安装位姿或场景后，必须重新标定和调整参数。
+随仓库提供的配置对应论文中的实验参数，其中共同强度阈值为 `140`。该配置是 Livox Mid-360 部署示例；更换雷达、反光材料、传感器安装位姿或场景后，必须重新标定和调整参数。
 
-\`\`\`bash
+```bash
 roslaunch reflector_detector reflector_v3.launch \
   input_topic:=/rslidar_points \
   imu_topic:=/imu/data \
   odom_topic:=/Odometry \
   frame_id:=rslidar
-\`\`\`
+```
 
 需要回放兼容 rosbag 时，在另一终端执行：
 
-\`\`\`bash
+回放 bag 时，检测节点的启动命令还应添加 `use_sim_time:=true`。
+
+```bash
 source /opt/ros/noetic/setup.bash
 rosbag play --clock /path/to/your_recording.bag
-\`\`\`
+```
 
-输入为 \`sensor_msgs/PointCloud2\`、\`sensor_msgs/Imu\` 和 \`nav_msgs/Odometry\`。主要输出如下：
+输入为 `sensor_msgs/PointCloud2`、`sensor_msgs/Imu` 和 `nav_msgs/Odometry`。主要输出如下：
 
 | 话题 | 类型 | 说明 |
 | --- | --- | --- |
-| \`/reflector_observations\` | \`geometry_msgs/PoseArray\` | 稳定或退化状态下的反光标志位置 |
-| \`/reflector_observations_detailed\` | \`reflector_detector/ReflectorObservationArray\` | 位置、置信度、状态和跟踪诊断信息 |
-| \`/reflector_markers\` | \`visualization_msgs/MarkerArray\` | RViz 可视化 |
-| \`/filtered_pointcloud\` | \`sensor_msgs/PointCloud2\` | 前端保留的高反射强度点云 |
+| `/reflector_observations` | `geometry_msgs/PoseArray` | 稳定或退化状态下的反光标志位置 |
+| `/reflector_observations_detailed` | `reflector_detector/ReflectorObservationArray` | 位置、置信度、状态和跟踪诊断信息 |
+| `/reflector_markers` | `visualization_msgs/MarkerArray` | RViz 可视化 |
+| `/filtered_pointcloud` | `sensor_msgs/PointCloud2` | 前端保留的高反射强度点云 |
 
-在 RViz 中添加 \`MarkerArray\` 并选择 \`/reflector_markers\`，再添加输入点云和 \`/filtered_pointcloud\` 的 \`PointCloud2\` 显示即可查看结果。
+在 RViz 中添加 `MarkerArray` 并选择 `/reflector_markers`，再添加输入点云和 `/filtered_pointcloud` 的 `PointCloud2` 显示即可查看结果。
 
 ## 评价工具
 
-\`evaluation/scripts\` 中的工具针对用户自行提供的 bag 和 CSV 标注运行，不依赖隐藏数据或固定本机路径。人工标注格式与典型评价命令见 [复现实验说明](docs/REPRODUCIBILITY.md)。
+`evaluation/scripts` 中的工具针对用户自行提供的 bag 和 CSV 标注运行，不依赖隐藏数据或固定本机路径。人工标注格式与典型评价命令见 [复现实验说明](docs/REPRODUCIBILITY.md)。
 
 ## 数据与可复现性
 

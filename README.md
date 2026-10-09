@@ -12,64 +12,66 @@ The paper's central contribution is stable landmark observation generation in re
 
 ## Repository Layout
 
-\`\`\`text
+```text
 ros1_ws/src/reflector_detector/  ROS Noetic package and message definitions
 evaluation/scripts/              CSV export, manual-labeling, and metric tools
 docs/                            Architecture, data policy, audit, and reproduction notes
-\`\`\`
+```
 
 ## Requirements
 
-The runtime was developed for Ubuntu 20.04, ROS Noetic, and Python 3. It requires ROS packages \`rospy\`, \`sensor_msgs\`, \`nav_msgs\`, \`geometry_msgs\`, \`visualization_msgs\`, and \`message_generation\`, plus Python packages NumPy, SciPy, and FilterPy.
+The runtime was developed for Ubuntu 20.04, ROS Noetic, and Python 3. It requires ROS packages `rospy`, `sensor_msgs`, `nav_msgs`, `geometry_msgs`, `visualization_msgs`, and `message_generation`, plus Python packages NumPy, SciPy, and FilterPy.
 
-\`\`\`bash
+```bash
 sudo apt-get install ros-noetic-desktop-full python3-numpy python3-scipy
 python3 -m pip install --user -r requirements.txt
-\`\`\`
+```
 
 ## Build
 
-\`\`\`bash
+```bash
 git clone https://github.com/afterhar/utility-tunnel-retroreflective-landmarks.git
 cd utility-tunnel-retroreflective-landmarks/ros1_ws
-catkin_make
 source /opt/ros/noetic/setup.bash
+catkin_make -DPYTHON_EXECUTABLE=/usr/bin/python3
 source devel/setup.bash
-\`\`\`
+```
 
 ## Run the Observation Module
 
-The supplied configuration reflects the experimental parameterization reported in the paper, including the common intensity threshold of \`140\`. It is an example configuration for a Livox Mid-360 deployment and must be re-tuned after changing sensor, reflector material, mounting pose, or environment.
+The supplied configuration reflects the experimental parameterization reported in the paper, including the common intensity threshold of `140`. It is an example configuration for a Livox Mid-360 deployment and must be re-tuned after changing sensor, reflector material, mounting pose, or environment.
 
-\`\`\`bash
+```bash
 roslaunch reflector_detector reflector_v3.launch \
   input_topic:=/rslidar_points \
   imu_topic:=/imu/data \
   odom_topic:=/Odometry \
   frame_id:=rslidar
-\`\`\`
+```
 
 In another terminal, replay a compatible bag if desired:
 
-\`\`\`bash
+For bag playback, add `use_sim_time:=true` to the detector launch command.
+
+```bash
 source /opt/ros/noetic/setup.bash
 rosbag play --clock /path/to/your_recording.bag
-\`\`\`
+```
 
-Inputs are \`sensor_msgs/PointCloud2\`, \`sensor_msgs/Imu\`, and \`nav_msgs/Odometry\`. Principal outputs are:
+Inputs are `sensor_msgs/PointCloud2`, `sensor_msgs/Imu`, and `nav_msgs/Odometry`. Principal outputs are:
 
 | Topic | Type | Purpose |
 | --- | --- | --- |
-| \`/reflector_observations\` | \`geometry_msgs/PoseArray\` | Stable and degraded reflector positions |
-| \`/reflector_observations_detailed\` | \`reflector_detector/ReflectorObservationArray\` | Positions, confidence, state, and tracking diagnostics |
-| \`/reflector_markers\` | \`visualization_msgs/MarkerArray\` | RViz visualization |
-| \`/filtered_pointcloud\` | \`sensor_msgs/PointCloud2\` | Strong points retained by the front end |
+| `/reflector_observations` | `geometry_msgs/PoseArray` | Stable and degraded reflector positions |
+| `/reflector_observations_detailed` | `reflector_detector/ReflectorObservationArray` | Positions, confidence, state, and tracking diagnostics |
+| `/reflector_markers` | `visualization_msgs/MarkerArray` | RViz visualization |
+| `/filtered_pointcloud` | `sensor_msgs/PointCloud2` | Strong points retained by the front end |
 
-Use RViz to add a \`MarkerArray\` display for \`/reflector_markers\` and \`PointCloud2\` displays for the input and filtered clouds.
+Use RViz to add a `MarkerArray` display for `/reflector_markers` and `PointCloud2` displays for the input and filtered clouds.
 
 ## Evaluation Tools
 
-The scripts in \`evaluation/scripts\` operate on user-provided bags and CSV labels. They create no hidden data and accept paths as command-line arguments. See [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md) for the label schema and representative commands.
+The scripts in `evaluation/scripts` operate on user-provided bags and CSV labels. They create no hidden data and accept paths as command-line arguments. See [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md) for the label schema and representative commands.
 
 ## Data and Reproducibility
 
